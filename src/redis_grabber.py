@@ -19,17 +19,6 @@ class RedisGrabber:
         return 'Arb Aggregator'
 
 
-    def _current_arbs(self, data):
-        grouper = lambda x: x.loc[(x['site1_last_updated'] == x['site1_last_updated'].max()) &
-                                  (x['site2_last_updated'] == x['site2_last_updated'].max())]
-        out_df = data.groupby(['side1', 'side2',
-                               'side1_site', 'side2_site',
-                               'start_time']).apply(grouper)
-        out_df.drop_duplicates(keep='first', inplace=True)
-
-        return out_df
-
-
     def get_data(self):
         r = redis.Redis(host=self.redis_url.hostname,
                          port=self.redis_url.port,
@@ -42,7 +31,7 @@ class RedisGrabber:
             data = json.loads(r.get(key))
             row_list.append(pd.DataFrame(data, index=[0]))
 
-        data = self._current_arbs(pd.concat(row_list, axis=0, sort=False))
+        data = pd.concat(row_list, axis=0, sort=False)
         data.index = np.arange(len(data))
         data.sort_values(by='start_time', ascending=False, inplace=True)
         # data = data.loc[data['side1_site'].isin(c_sites)]
@@ -63,7 +52,7 @@ class RedisGrabber:
 
 
     def formatted_output(self):
-        time_thresh = dt.datetime.now() + dt.timedelta(hours=2)
+        time_thresh = dt.datetime.now() - dt.timedelta(hours=6)
 
         df = self.data[(pd.to_datetime(self.data['start_time']) > dt.datetime.now() - dt.timedelta(hours=12))]
 
@@ -71,7 +60,9 @@ class RedisGrabber:
 
         for _, row in df.iterrows():
             arb_dict = {}
-            if pd.to_datetime(row['start_time']) < time_thresh and (row['side1_odds'] != 1 or row['side2_odds'] != 1):
+            if pd.to_datetime(row['start_time']) > time_thresh and (row['side1_odds'] == 1 or row['side2_odds'] == 1):
+                continue
+            else:
                 arb_dict['start_time'] = row['start_time']
                 arb_dict['team1'] = row['side1']
                 arb_dict['team2'] = row['side2']
