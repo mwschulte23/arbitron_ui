@@ -42,8 +42,8 @@ def calculator():
             f_edge = f'${edge:.2f}'
             side1_bet = (prob1 / (prob1 + prob2)) * form.bet_amount.data
             side2_bet = (prob2 / (prob1 + prob2)) * form.bet_amount.data
-            f_side1_bet = f'${side1_bet: .2f}'
-            f_side2_bet = f'${side2_bet: .2f}'
+            f_side1_bet = f'${side1_bet:.2f}'
+            f_side2_bet = f'${side2_bet:.2f}'
 
         return render_template('calculator.html', form=form, details=[f_edge, f_side1_bet, f_side2_bet])
 
