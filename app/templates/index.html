@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <div class="class="mx-auto" style="width: 80%; text-align: center;">
+        <h1 class="title" style="color: silver">Here are recent Arbs</h1>
+        <h3 class="subtitle" style="color: silver; padding-bottom: 3%">Quickly Navigate With Site Links</h3>
+    </div>
+    <div class="container" style="padding 5%">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-6">
+                <table class="table table-hover" style="width: 80%; align-content: center;">
+                    <thead>
+                    <tr>
+                        <th>Start Time</th>
+                        <th>Upside (%)</th>
+                        <th>Team</th>
+                        <th>Odds</th>
+                        <th>MoneyLine</th>
+                        <th>Site URL</th>
+                        <th>Last Updated</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arb in arbs %}
+                    <tr>
+                        <th>{{ arb.start_time }}</th>
+                        <th>{{ arb.upside }}</th>
+                        <th>{{ arb.team1 }}</th>
+                        <th>{{ arb.odds1 }}</th>
+                        <th>{{ arb.ml1 }}</th>
+                        <th><a href="{{ arb.site1_url }}" target="_blank">{{ arb.site1 }}</a></th>
+                        <th>{{ arb.site1_update }}</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>{{ arb.team2 }}</th>
+                        <th>{{ arb.odds2 }}</th>
+                        <th>{{ arb.ml2 }}</th>
+                        <th><a href="{{ arb.site2_url }}" target="_blank">{{ arb.site2 }}</a></th>
+                        <th>{{ arb.site2_update }}</th>
+                        <th></th>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+<style type="text/css">
+    body {
+        background-color: #222222;
+    }
+    .container {
+        alignment: center;
+    }
+    .title {
+        text-decoration: bold;
+        text-align: center;
+    }
+    .subtitle {
+        color: grey;
+        text-align: center;
+    }
+    .table th {
+        color: lightgrey;
+        align-content: center;
+    }
+    .table-hover tbody tr:hover {
+  background-color: darkgrey;
+}
+</style>
+
+{% endblock %}
+

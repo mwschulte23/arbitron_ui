@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+    <div class="container-fluid" style="margin-left: 12%; margin-right:12%">
+        <div class="w-40 p-3" style="width: 40%; padding: 1%; alignment: center;">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-header" style="color: white; text-align: center;">Calculate Upside</h3>
+                    <h5 class="subtitle" style="color: floralwhite; text-align: center"><em>*Enter moneyline odds</em></h5>
+                </div>
+                <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-lg-4 col-form-label">{{ form.first_odd.label }}</label>
+                        {{ form.first_odd(size=16) }}
+                    </div>
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-lg-4 col-form-label">{{ form.second_odd.label }}</label>
+                        {{ form.second_odd(size=16) }}
+                    </div>
+                    <div class="form-group row">
+                        <label for="colFormLabel" class="col-lg-4 col-form-label">{{ form.bet_amount.label }}</label>
+                        {{ form.bet_amount(size=16) }}
+                    </div>
+                    <div class="submit" style="align-content: right">
+                    {{ form.submit() }}
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+        {% if details %}
+        <div class="w-40 p-3" style="width: 25%; padding: 1%; alignment: center;">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-header" style="color: lightslategray; text-align: center;">Results</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover">
+                        <tbody>
+                        <tr>
+                            <th>Edge</th>
+                            <th>{{ details[0] }}</th>
+                        </tr>
+                        <tr>
+                            <th>Team One Bet</th>
+                            <th>{{ details[1] }}</th>
+                        </tr>
+                        <tr>
+                            <th>Team Two Bet</th>
+                            <th>{{ details[2] }}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+<style>
+    body {
+        background-color: #222222;
+    }
+    .container-fluid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .card {
+      position: relative;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #303030;
+    }
+    .submit {
+        align-content: center;
+        alignment: center;
+        color: black;
+    }
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+        color: lightslategray;
+    }
+    /*.card-header {*/
+    /*  padding: 0.75rem 1.25rem;*/
+    /*  margin-bottom: 0;*/
+    /*  background-color: grey;*/
+    /*  border-bottom: 1px solid rgba(0, 0, 0, 0.125);*/
+    /*}*/
+</style>
+
+{% endblock %}
