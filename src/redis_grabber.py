@@ -11,7 +11,7 @@ from src import SITES
 
 class RedisGrabber:
     def __init__(self):
-        self.redis_url = parse.urlparse(os.getenv('REDIS_URL'))
+        self.redis_url = parse.urlparse(os.getenv('REDISCLOUD_URL'))
         self.data = self.get_data()
 
 
@@ -63,9 +63,6 @@ class RedisGrabber:
 
 
     def formatted_output(self):
-        r = redis.Redis(host=self.redis_url.hostname,
-                        port=self.redis_url.port,
-                        password=self.redis_url.password)
         delt = dt.timedelta(hours=2)
 
         df = self.data[(pd.to_datetime(self.data['start_time']) > dt.datetime.now() - dt.timedelta(hours=12))]
