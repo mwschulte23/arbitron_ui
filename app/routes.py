@@ -16,12 +16,14 @@ def index():
 def calculate_prob(x):
     if x > 0:
         dec = x / 100 + 1
+        out = 1 / dec
     elif x < 0:
         dec = 100 / np.abs(x) + 1
+        out = 1 / dec
     else:
-        pass
+        out = 'N/A'
 
-    return 1 / dec #implied prob
+    return out #implied prob
 
 @app.route('/calculator', methods=['GET', 'POST'])
 def calculator():
